@@ -3,7 +3,6 @@ import { headers } from 'next/headers'
 import { clerkClient, type WebhookEvent } from '@clerk/nextjs/server'
 import { CreateUser, DeleteUser } from '@/lib/actions/user.actions'
 import { NextResponse } from 'next/server'
-import { CreateProfile } from '@/lib/actions/profile.actions'
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -74,8 +73,9 @@ export async function POST(req: Request) {
           userId: newUser.id
         }
       })
+    } else {
+      return
     }
-    const newProfile = await CreateProfile(newUser.id)
     return NextResponse.json({ message: "OK" })
   }
 

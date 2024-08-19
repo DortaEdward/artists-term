@@ -3,14 +3,14 @@
 import { db } from "@/server/db";
 import type { User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { HandleError } from "../utils";
 
 export async function CreateUser(user: User) {
   try {
     const createdUser = await db.user.create({ data: user })
     return createdUser
   } catch (error) {
-    console.error(error)
-    throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    HandleError(error)
   }
 }
 
@@ -40,7 +40,6 @@ export async function DeleteUser(clerkId: string) {
     revalidatePath("/")
     return deletedUser
   } catch (error) {
-    console.error(error)
-    throw new Error(typeof error === "string" ? error : JSON.stringify(error))
+    HandleError(error)
   }
 }

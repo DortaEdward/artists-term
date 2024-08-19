@@ -21,7 +21,7 @@ export default async function Header() {
           <div>
             <SignedIn>
               <div className="h-full flex gap-2 items-center relative">
-                <p className="capitalize text-lg font-medium hidden lg:block">{user?.username}</p>
+                <Link href={`/profile/${user?.publicMetadata.userId as string}`} className="capitalize text-lg font-medium hidden lg:block cursor-pointer">{user?.username}</Link>
                 <UserButton />
                 <MobileNavbar />
               </div>

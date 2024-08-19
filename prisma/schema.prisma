@@ -49,22 +49,27 @@ model Comment {
 }
 
 model User {
-  id           String    @id @default(uuid())
-  clerkId      String    @unique
+  id           String      @id @default(uuid())
+  clerkId      String      @unique
   email        String
   username     String
   firstName    String?
   lastName     String?
   profileImage String?
-  Profile      Profile[]
-  Likes        Likes[]
-  Comment      Comment[]
-  Post         Post[]
+  description  String?
+  likes        Likes[]
+  comment      Comment[]
+  post         Post[]
+  follower     Following[] @relation("UserFollower")
+  following    Following[] @relation("UserFollowing")
+
+  @@map("users")
 }
 
-model Profile {
+model Following {
   id          String @id @default(uuid())
-  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-  description String
+  follower    User   @relation("UserFollower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  String
+  followeing  User   @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String
 }
