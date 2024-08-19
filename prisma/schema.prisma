@@ -11,20 +11,60 @@ datasource db {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  description String
+  images      String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Likes       Likes[]
+  Comment     Comment[]
 
-  @@index([name])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@index([description])
+}
+
+model Likes {
+  id     String @id @default(uuid())
+  post   Post   @relation(fields: [postId], references: [id])
+  postId Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@index([postId])
+}
+
+model Comment {
+  id     String @id @default(uuid())
+  post   Post   @relation(fields: [postId], references: [id])
+  postId Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  parent   Comment?  @relation("ParentChild", fields: [parentId], references: [id])
+  parentId String
+  children Comment[] @relation("ParentChild")
+  userId   String
 }
 
 model User {
-  id           String  @id @default(uuid())
-  clerkId      String  @unique
+  id           String    @id @default(uuid())
+  clerkId      String    @unique
   email        String
   username     String
   firstName    String?
   lastName     String?
   profileImage String?
+  Profile      Profile[]
+  Likes        Likes[]
+  Comment      Comment[]
+  Post         Post[]
+}
+
+model Profile {
+  id          String @id @default(uuid())
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  description String
 }
