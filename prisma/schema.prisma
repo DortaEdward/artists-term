@@ -56,7 +56,7 @@ model User {
   firstName    String?
   lastName     String?
   profileImage String?
-  description  String?
+  description  String?     @default("")
   likes        Likes[]
   comment      Comment[]
   post         Post[]

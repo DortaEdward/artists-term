@@ -17,7 +17,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     <MaxWidthWrapper>
       <div>
         <p>{user ? `user: ${user.id}` : "none"}</p>
-        <p>Temp</p>
+        <p>Description:</p>
       </div>
     </MaxWidthWrapper>
 
