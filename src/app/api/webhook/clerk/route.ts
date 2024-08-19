@@ -73,8 +73,6 @@ export async function POST(req: Request) {
           userId: newUser.id
         }
       })
-    } else {
-      return
     }
     return NextResponse.json({ message: "OK" })
   }

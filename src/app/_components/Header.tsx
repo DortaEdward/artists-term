@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default async function Header() {
   const user = await currentUser()
+  console.log(user)
 
   return (
     <header className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-20 bg-white/75 backdrop-blur-lg transition-all">
