@@ -10,6 +10,7 @@ export async function GetUserById(id: string) {
     })
     return user;
   } catch (error) {
-    HandleError(error)
+    console.log(error)
+    return
   }
 }

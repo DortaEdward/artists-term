@@ -3,6 +3,7 @@ import MaxWidthWrapper from "../_shared/MaxWidthContainer";
 import { currentUser } from "@clerk/nextjs/server";
 import MobileNavbar from "./MobileNavbar";
 import Link from "next/link";
+import {MdCamera} from "react-icons/md"
 
 export default async function Header() {
   const user = await currentUser()
@@ -16,6 +17,9 @@ export default async function Header() {
           </div>
           <div className="flex-grow items-center justify-center gap-4 hidden lg:flex">
             <Link href="/discover" className="text-lg font-semibold tracking-widest hover:border-b-2 border-red-400 transition-all ease-in-out duration-150">Discover</Link>
+            <Link href="/upload" className="text-lg font-semibold tracking-widest transition-all ease-in-out duration-150 border-2 p-1 rounded-md">
+              <MdCamera size={24} />
+            </Link>
             <Link href="/profile" className="text-lg font-semibold tracking-widest hover:border-b-2 border-red-400 transition-all ease-in-out duration-150">Profile</Link>
           </div>
           <div>
