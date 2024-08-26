@@ -1,11 +1,9 @@
 "use client";
 
 import { DeletePost } from "@/lib/actions/post.actions";
-import { useUploadThing } from "@/utils/uploadthing";
 import type { Prisma } from "@prisma/client";
 import { useState } from "react";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
-
 
 type PostWithUser = Prisma.PostGetPayload<{
   include: {
@@ -20,9 +18,8 @@ export default function PostCard({
   post: PostWithUser;
   userId: string;
 }) {
-  
   const [expand, setExpand] = useState(false);
-  
+
   return (
     <div
       key={post.id}
@@ -30,23 +27,31 @@ export default function PostCard({
     >
       <div>
         {userId == post.userId ? (
-          <div className="absolute right-2 top-2 rounded bg-white/85">
+          <div className="absolute right-2 top-2 rounded flex flex-col items-end px-2">
             {expand ? (
               <>
-              <MdExpandLess
-                onClick={() => setExpand((prev) => !prev)}
-                size={24}
-              />
-            <form action={async () => {
-              await DeletePost(post.images[0]!)
-              }}>
-              <button>Delete This</button>
-            </form>
+                <MdExpandLess
+                  onClick={() => setExpand((prev) => !prev)}
+                  size={24}
+                  className="bg-white/85"
+                />
+                <form
+                className="bg-red-500 font-bold py-1 px-2 rounded mt-1"
+                  action={async () => {
+                    await DeletePost({
+                      id: Number(post.id),
+                      imageKey: post.imageKey as string,
+                    });
+                  }}
+                >
+                  <button className="text-white">Delete</button>
+                </form>
               </>
             ) : (
               <MdExpandMore
                 onClick={() => setExpand((prev) => !prev)}
                 size={24}
+                className="bg-white/85"
               />
             )}
           </div>

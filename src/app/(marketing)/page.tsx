@@ -6,9 +6,9 @@ import MaxWidthWrapper from "../_shared/MaxWidthContainer";
 export default function HomePage() {
 
   const session = auth()
-  // if (session.userId) {
-  //   redirect("/feed")
-  // }
+  if (session.userId) {
+    redirect("/feed")
+  }
 
   return (
     <main className="flex flex-col flex-grow items-center justify-center gap-6">

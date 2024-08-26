@@ -3,6 +3,7 @@
 import { HandleError } from "@/lib/utils";
 import { db } from "@/server/db";
 import { utapi } from "@/server/uploadthing";
+import { revalidatePath } from "next/cache";
 
 
 
@@ -36,12 +37,18 @@ export async function CreatePostAction(payload: CreatePostPayload) {
 
 
 
-export async function DeletePost(imageUrl: string) {
+export async function DeletePost({id,imageKey}:{id:number,imageKey:string}) {
   
   try {
-    const {success, deletedCount} = await utapi.deleteFiles(imageUrl)
-    console.log("Success?:",success)
-    console.log("deletedCount?:",deletedCount)
+    const {success, deletedCount} = await utapi.deleteFiles(imageKey)
+    if(success){
+      await db.post.delete({
+        where:{
+          id:id
+        }
+      })
+    }
+    revalidatePath("/feed")
   } catch (error) {
     HandleError(error)
   }

@@ -55,14 +55,15 @@ export default function UploadComponent() {
       return;
     }
     const res = await startUpload(imageFiles);
-    console.log(res)
+    
     if (res) {
       const payload = {
         description: description,
         images: [res[0]?.url],
         userId: res[0]?.serverData.uploadedBy,
-        imageKey: res.keys,
+        imageKey: res[0]?.key,
       };
+  
       try {
         await fetch("/api/post", {
           method: "POST",
